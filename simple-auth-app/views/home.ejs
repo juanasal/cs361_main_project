@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Home</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+  <h1>Home</h1>
+
+  <p>You are logged in as <strong>
+      <%= username %>
+    </strong>.</p>
+
+  <form method="POST" action="/logout">
+    <button type="submit">Logout</button>
+  </form>
+</body>
+
+</html>

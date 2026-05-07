@@ -1,0 +1,6 @@
+simple-auth-app/node_modules/
+simple-auth-app/users.db
+
+.env
+.DS_Store
+npm-debug.log*

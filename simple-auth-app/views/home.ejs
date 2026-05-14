@@ -7,15 +7,30 @@
 </head>
 
 <body>
-  <h1>Home</h1>
+  <main class="dashboard-shell">
+    <section class="dashboard-panel">
+      <header class="dashboard-header">
+        <h1>PostLingo!</h1>
 
-  <p>You are logged in as <strong>
-      <%= username %>
-    </strong>.</p>
+        <nav class="dashboard-nav" aria-label="Dashboard navigation">
+          <button type="button">Play Game</button>
+          <button type="button">Read Article</button>
+          <button type="button" class="active">Dashboard</button>
+          <form method="POST" action="/logout">
+            <button type="submit">Log Out</button>
+          </form>
+        </nav>
+      </header>
 
-  <form method="POST" action="/logout">
-    <button type="submit">Logout</button>
-  </form>
+      <section class="stats-readout" aria-label="Dashboard stats">
+        <p>Logged in as <strong><%= username %></strong>.</p>
+        <p>Games Completed: <strong><%= stats.gamesCompleted %></strong></p>
+        <p>Average Game Score: <strong><%= stats.averageGameScore %></strong></p>
+        <p>Readings Completed: <strong><%= stats.readingsCompleted %></strong></p>
+        <p>Average Quiz Score: <strong><%= stats.averageQuizScore %></strong></p>
+      </section>
+    </section>
+  </main>
 </body>
 
 </html>

@@ -7,25 +7,32 @@
 </head>
 
 <body>
-  <h1>Login</h1>
+  <main class="page-shell">
+    <section class="panel">
+      <a class="back-button" href="/welcome" aria-label="Back to welcome">← Back to Welcome</a>
 
-  <% if (error) { %>
-    <p class="error">
-      <%= error %>
-    </p>
-    <% } %>
+      <div class="form-heading">
+        <h1>Welcome to PostLingo!</h1>
+        <p>Enter your login details below:</p>
+      </div>
 
-      <form method="POST" action="/login">
-        <label>Username</label>
-        <input type="text" name="username">
+      <% if (error) { %>
+        <p class="error">
+          <%= error %>
+        </p>
+      <% } %>
 
-        <label>Password</label>
-        <input type="password" name="password">
+      <form class="auth-form" method="POST" action="/login">
+        <label for="identifier">Username or email:</label>
+        <input id="identifier" type="text" name="identifier">
 
-        <button type="submit">Login</button>
+        <label for="password">Password:</label>
+        <input id="password" type="password" name="password">
+
+        <button type="submit">Submit</button>
       </form>
-
-      <p>Need an account? <a href="/register">Register</a></p>
+    </section>
+  </main>
 </body>
 
 </html>

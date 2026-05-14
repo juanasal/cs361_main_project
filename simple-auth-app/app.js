@@ -5,6 +5,7 @@ const db = require("./database");
 
 const app = express();
 const PORT = 3000;
+const VALID_LANGUAGES = ["English", "Español", "Français"];
 
 app.set("view engine", "ejs");
 
@@ -40,24 +41,30 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  const { username, password } = req.body;
+  const username = req.body.username?.trim();
+  const email = req.body.email?.trim().toLowerCase();
+  const password = req.body.password;
+  const language = req.body.language;
 
-  if (!username || !password) {
-    return res.render("register", { error: "Username and password are required." });
+  if (!username || !email || !password || !language) {
+    return res.render("register", { error: "All fields are required." });
+  }
+
+  if (!VALID_LANGUAGES.includes(language)) {
+    return res.render("register", { error: "Please choose a valid language." });
   }
 
   const passwordHash = await bcrypt.hash(password, 10);
 
   try {
-    const statement = db.prepare(
-      "INSERT INTO users (username, password_hash) VALUES (?, ?)"
-    );
+    const userId = db.createUser(username, email, passwordHash, language);
 
-    statement.run(username, passwordHash);
+    req.session.userId = userId;
+    req.session.username = username;
 
-    res.redirect("/login");
+    res.redirect("/home");
   } catch (error) {
-    res.render("register", { error: "That username is already taken." });
+    res.render("register", { error: "That username or email is already taken." });
   }
 });
 
@@ -66,11 +73,14 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  const identifier = req.body.identifier?.trim();
+  const password = req.body.password;
 
-  const user = db
-    .prepare("SELECT * FROM users WHERE username = ?")
-    .get(username);
+  if (!identifier || !password) {
+    return res.render("login", { error: "Username or email and password are required." });
+  }
+
+  const user = db.findUserByUsernameOrEmail(identifier);
 
   if (!user) {
     return res.render("login", { error: "Invalid username or password." });
@@ -89,7 +99,10 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/home", requireLogin, (req, res) => {
-  res.render("home", { username: req.session.username });
+  res.render("home", {
+    username: req.session.username,
+    stats: db.getUserDashboardStats(req.session.userId)
+  });
 });
 
 app.post("/logout", (req, res) => {

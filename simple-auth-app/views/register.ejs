@@ -7,25 +7,54 @@
 </head>
 
 <body>
-  <h1>Register</h1>
+  <main class="page-shell">
+    <section class="panel">
+      <a class="back-button" href="/welcome" aria-label="Back to welcome">← Back to Welcome</a>
 
-  <% if (error) { %>
-    <p class="error">
-      <%= error %>
-    </p>
-    <% } %>
+      <div class="form-heading">
+        <h1>Welcome to PostLingo!</h1>
+        <p>Enter your details below:</p>
+      </div>
 
-      <form method="POST" action="/register">
-        <label>Username</label>
-        <input type="text" name="username">
+      <% if (error) { %>
+        <p class="error">
+          <%= error %>
+        </p>
+      <% } %>
 
-        <label>Password</label>
-        <input type="password" name="password">
+      <form class="auth-form" method="POST" action="/register">
+        <label for="username">Username:</label>
+        <input id="username" type="text" name="username">
 
-        <button type="submit">Create Account</button>
+        <label for="password">Password:</label>
+        <input id="password" type="password" name="password">
+
+        <label for="email">Email address:</label>
+        <input id="email" type="email" name="email">
+
+        <fieldset class="language-fieldset">
+          <legend>Language to learn:</legend>
+
+          <label class="language-option">
+            <input type="radio" name="language" value="English">
+            <span>English</span>
+          </label>
+
+          <label class="language-option">
+            <input type="radio" name="language" value="Español">
+            <span>Español</span>
+          </label>
+
+          <label class="language-option">
+            <input type="radio" name="language" value="Français">
+            <span>Français</span>
+          </label>
+        </fieldset>
+
+        <button type="submit">Submit</button>
       </form>
-
-      <p>Already have an account? <a href="/login">Login</a></p>
+    </section>
+  </main>
 </body>
 
 </html>

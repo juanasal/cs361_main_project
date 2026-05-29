@@ -1,6 +1,7 @@
 simple-auth-app/node_modules/
 simple-auth-app/users.db
 notification-service/
+feedback-service/
 
 .env
 .DS_Store

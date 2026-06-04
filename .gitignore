@@ -1,7 +1,9 @@
-simple-auth-app/node_modules/
-simple-auth-app/users.db
+main-app/node_modules/
+users.db/
 notification-service/
 feedback-service/
+Password-Generator-Microservice/
+Verification-Microservice/
 
 .env
 .DS_Store

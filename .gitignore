@@ -1,10 +1,10 @@
 main-app/node_modules/
-users.db/
 notification-service/
 feedback-service/
 Password-Generator-Microservice/
 Verification-Microservice/
 
+*.db
 .env
 .DS_Store
 npm-debug.log*

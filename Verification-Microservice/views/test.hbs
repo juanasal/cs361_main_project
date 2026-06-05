@@ -1,0 +1,43 @@
+<div class="container">
+    <article>
+        <h2>Human Verification Test</h2>
+        <button id="humanity" type="humanity" class="humanity">I am not a bot</button>
+        <button id="submit" type="submit" class='submit' onclick="closeSubmit()">Submit</button>
+    </article>
+</div>
+
+<script>
+    let submit = document.getElementById("submit")
+
+    let humanity = document.getElementById("humanity")
+
+    humanity.addEventListener('click', async () => {
+        //Write string 'verify' into txt file
+        const write = await fetch('/write-to-file', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ textData: "verify" })
+        });
+        const result = await write.text();
+        alert('verification successful');
+
+        //Read txt file
+        try {
+            const read = await fetch('read-file');
+            const text = await read.text();
+
+            if (text == 'verified') {
+                submit.classList.add("open-submit")
+                humanity.classList.add("close-humanity")
+            }
+
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    });
+
+    function closeSubmit() {
+        submit.classList.remove("open-submit")
+        humanity.classList.remove("close-humanity")
+    }
+</script>

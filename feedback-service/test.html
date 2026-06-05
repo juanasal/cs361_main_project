@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Feedback Service Test Page</title>
+</head>
+
+<body>
+  <h1>Feedback Microservice Test Page</h1>
+
+  <p>Enter feedback below and submit it to the feedback microservice.</p>
+
+  <label for="feedbackMessage">Feedback:</label>
+  <br>
+
+  <textarea id="feedbackMessage" rows="5" cols="50" placeholder="Enter your feedback here"></textarea>
+  <br><br>
+
+  <button onclick="submitFeedback()">Submit Feedback</button>
+
+  <h2>Microservice Response</h2>
+  <pre id="output">No feedback submitted yet.</pre>
+
+  <script>
+    async function submitFeedback() {
+      const feedbackMessage = document.getElementById("feedbackMessage").value;
+      const output = document.getElementById("output");
+
+      try {
+        const response = await fetch("http://localhost:3002/submit-feedback", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            userId: 1,
+            feedbackMessage: feedbackMessage
+          })
+        });
+
+        const data = await response.json();
+
+        output.textContent = JSON.stringify(data, null, 2);
+
+      } catch (error) {
+        output.textContent = "Error calling feedback service:\n\n" + error;
+      }
+    }
+  </script>
+</body>
+
+</html>

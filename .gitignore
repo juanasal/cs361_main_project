@@ -1,10 +1,6 @@
-main-app/node_modules/
-notification-service/
-feedback-service/
-Password-Generator-Microservice/
-Verification-Microservice/
+*node_modules/
 
 *.db
-.env
-.DS_Store
-npm-debug.log*
+*.env
+*.DS_Store
+*npm-debug.log*

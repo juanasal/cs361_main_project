@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Notification Service Test Page</title>
+</head>
+
+<body>
+  <h1>Notification Microservice Test Page</h1>
+
+  <p>This page tests the notification microservice using buttons.</p>
+
+  <button onclick="testNotification('delete_item', 'Delete Item')">
+    Delete Item
+  </button>
+
+  <button onclick="testNotification('submit_form', 'Submit Form')">
+    Submit Form
+  </button>
+
+  <button onclick="testNotification('save_progress', 'Save Progress')">
+    Save Progress
+  </button>
+
+  <button onclick="testNotification('start_quiz', 'Start Quiz')">
+    Start Quiz
+  </button>
+
+  <h2>Microservice Response</h2>
+  <pre id="output">No request sent yet.</pre>
+
+  <script>
+    async function testNotification(actionType, buttonName) {
+      const output = document.getElementById("output");
+
+      try {
+        // Step 1: Ask the microservice to create a notification
+        const createResponse = await fetch("http://localhost:3001/create-notification", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            userId: 1,
+            actionType: actionType,
+            buttonName: buttonName
+          })
+        });
+
+        const notification = await createResponse.json();
+
+        output.textContent =
+          "Response from /create-notification:\n\n" +
+          JSON.stringify(notification, null, 2);
+
+        if (!notification.success) {
+          return;
+        }
+
+        // Step 2: Show the confirmation message to the user
+        const userConfirmed = confirm(notification.message);
+
+        // Step 3: Send the user's Confirm/Cancel choice back to the microservice
+        const confirmResponse = await fetch("http://localhost:3001/confirm-notification", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            notificationId: notification.notificationId,
+            confirmed: userConfirmed
+          })
+        });
+
+        const confirmationResult = await confirmResponse.json();
+
+        // Step 4: Display both responses
+        output.textContent =
+          "Response from /create-notification:\n\n" +
+          JSON.stringify(notification, null, 2) +
+          "\n\nResponse from /confirm-notification:\n\n" +
+          JSON.stringify(confirmationResult, null, 2);
+
+      } catch (error) {
+        output.textContent = "Error calling notification service:\n\n" + error;
+      }
+    }
+  </script>
+</body>
+
+</html>

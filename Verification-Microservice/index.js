@@ -1,25 +1,25 @@
 const http = require('node:http');
 
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = 3005;
 
-const express = require('express');   
-const app = express();  
+const express = require('express');
+const app = express();
 
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static('public'))
 
 const { engine } = require('express-handlebars');
-const exphbs = require('express-handlebars');     
-app.engine('.hbs', engine({extname: ".hbs"}));  
-app.set('view engine', '.hbs');                 
+const exphbs = require('express-handlebars');
+app.engine('.hbs', engine({extname: ".hbs"}));
+app.set('view engine', '.hbs');
 
 const cors = require('cors');
 app.use(cors());
 
 app.get('/', function(req, res){
-    res.render('test'); 
+    res.render('test');
     });
 
 const path = require("path");
@@ -43,7 +43,7 @@ app.get('/read-file', (req, res) => {
         if (err) {
             return res.status(500).send('Error reading file');
         }
-        res.send(data); 
+        res.send(data);
     });
 });
 

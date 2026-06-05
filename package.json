@@ -1,0 +1,24 @@
+{
+  "name": "cs361_main_project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently -n main,notify,feedback,password,verify -c blue,green,magenta,cyan,yellow \"npm --prefix main-app run dev\" \"npm --prefix notification-service run dev\" \"npm --prefix feedback-service run dev\" \"npm --prefix Password-Generator-Microservice run dev\" \"npm --prefix Verification-Microservice run dev\"",
+    "start": "concurrently -n main,notify,feedback,password,verify -c blue,green,magenta,cyan,yellow \"npm --prefix main-app start\" \"npm --prefix notification-service start\" \"npm --prefix feedback-service start\" \"npm --prefix Password-Generator-Microservice start\" \"npm --prefix Verification-Microservice start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanasal/cs361_main_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juanasal/cs361_main_project/issues"
+  },
+  "homepage": "https://github.com/juanasal/cs361_main_project#readme",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^10.0.3"
+  }
+}
